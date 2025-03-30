@@ -1,4 +1,1 @@
-Build a smart agriculture system that uses Raspberry Pi to monitor soil moisture,
-temperature, and humidity. Implement an automated irrigation system that adjusts water
-flow based on real-time sensor data. Extend the system by integrating a weather forecast
-API to optimize irrigation schedules.
+Build a smart agriculture system that uses Raspberry Pi to monitor ```soil moisture```, ```temperature```, and ```humidity```. Implement an automated irrigation system that adjusts water flow based on real-time sensor data. Extend the system by integrating a weather forecast API to optimize irrigation schedules.
