@@ -1,5 +1,5 @@
 # monitor soil moisture
-import RPi.GPIO from GPIO
+import RPi.GPIO as GPIO
 import time
 import Adafruit_DHT
 
@@ -35,6 +35,3 @@ def temp_callback(channel):
 
 # while True:
 #   time.sleep(1)
-
-
-# monitor humidity
