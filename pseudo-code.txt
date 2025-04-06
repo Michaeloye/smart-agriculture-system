@@ -1,0 +1,55 @@
+// --- Get Sensor Readings ---
+GET airTemperature from DHT11
+GET humidity from DHT11
+GET soilMoistureLevel from soil moisture sensor
+
+// --- Define Watering Thresholds (Adjust these based on your maize needs and sensor calibration) ---
+SET soilMoistureLowThreshold = 30  // Example: Percentage or raw sensor value indicating dryness
+SET airTemperatureHighThreshold = 32 // Example: Degrees Celsius
+SET humidityLowThreshold = 50      // Example: Percentage
+
+// --- Check Conditions for Watering ---
+
+IF soilMoistureLevel IS BELOW soilMoistureLowThreshold THEN
+    // Soil is dry, now consider other factors
+
+    IF airTemperature IS ABOVE airTemperatureHighThreshold AND humidity IS BELOW humidityLowThreshold THEN
+        // Hot and dry air, high need for water
+        ACTION: Water the plant
+        LOG: "Watering triggered: Low soil moisture, high temperature, low humidity"
+
+    ELSE IF airTemperature IS ABOVE airTemperatureHighThreshold THEN
+        // Hot air, increased transpiration, likely need for water
+        ACTION: Water the plant
+        LOG: "Watering triggered: Low soil moisture and high temperature"
+
+    ELSE IF humidity IS BELOW humidityLowThreshold THEN
+        // Dry air will draw moisture from soil
+        ACTION: Water the plant
+        LOG: "Watering triggered: Low soil moisture and low humidity"
+
+    ELSE
+        // Soil is dry, but air conditions are not extreme
+        ACTION: Water the plant
+        LOG: "Watering triggered: Low soil moisture"
+
+    ENDIF
+
+ELSE
+    // Soil moisture is adequate
+    LOG: "No watering needed: Soil moisture is sufficient"
+
+ENDIF
+
+// --- Optional: Implement a minimum watering interval to prevent overwatering ---
+// GET lastWateringTime
+// SET minimumWateringInterval = 6 hours // Example
+
+// IF soilMoistureLevel IS BELOW soilMoistureLowThreshold AND
+//    (currentTime - lastWateringTime IS GREATER THAN OR EQUAL TO minimumWateringInterval) THEN
+//     ACTION: Water the plant
+//     UPDATE lastWateringTime = currentTime
+//     LOG: "Watering triggered: Low soil moisture and minimum interval passed"
+// ELSE
+//     LOG: "No watering needed (either moisture sufficient or within minimum interval)"
+// ENDIF
